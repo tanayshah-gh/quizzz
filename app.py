@@ -42,16 +42,21 @@ def start_quiz(questions):
         question = q_data['question']
         correct_answer = q_data['answer']
         
-        print(f"\nQuestion {index + 1}: {question}")
+        print(f"\nQuestion {index + 1} of {total_questions}: {question}")
         
-        user_answer = input("Your Answer: ")
+        user_answer = input("Your Answer (Type 'quit' or 'exit' to stop): ")
+        
+        if user_answer.strip().lower() in ('quit', 'exit'):
+            print(f"\n--- Quiz Stopped by User! ---")
+            print(f"Your score at the time of exit is: {score} out of {index + 1} questions attempted.")
+            return 
 
         if user_answer.strip().lower() == correct_answer.lower():
             print("Correct!")
             score += 1
         else:
             print(f"Wrong. The correct answer was: {correct_answer}")
-            
+
     print("\n--- Quiz Complete! ---")
     print(f"Your final score is: {score} out of {total_questions}")
 
