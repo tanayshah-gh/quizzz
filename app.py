@@ -28,6 +28,32 @@ def load_questions(filepath):
         
     return questions
 
+def start_quiz(questions):
+    if not questions:
+        print("No questions loaded. The quiz cannot start.")
+        return
+
+    score = 0
+    total_questions = len(questions)
+
+    print("\n--- Quiz Starting! ---")
+
+    for index, q_data in enumerate(questions):
+        question = q_data['question']
+        correct_answer = q_data['answer']
+        
+        print(f"\nQuestion {index + 1}: {question}")
+        
+        user_answer = input("Your Answer: ")
+
+        if user_answer.strip().lower() == correct_answer.lower():
+            print("Correct!")
+            score += 1
+        else:
+            print(f"Wrong. The correct answer was: {correct_answer}")
+            
+    print("\n--- Quiz Complete! ---")
+    print(f"Your final score is: {score} out of {total_questions}")
 
 def main():
     print("Welcome to the Command-Line Quiz Engine!")
@@ -61,9 +87,8 @@ def main():
 
     if questions:
         print(f"Successfully loaded {len(questions)} questions. Ready to start quiz.")
+        start_quiz(questions)
 
-if __name__ == "__main__":
-    main()
 
 if __name__ == "__main__":
     main()
