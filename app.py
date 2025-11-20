@@ -9,6 +9,25 @@ def find_quiz_files():
     quiz_files = glob.glob(search_path)
     return quiz_files
 
+def load_questions(filepath):
+    questions = []
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if len(row) == 2:
+                    question_text = row[0].strip()
+                    answer_text = row[1].strip()
+                    questions.append({'question': question_text, 'answer': answer_text})
+    except FileNotFoundError:
+        print(f"Error: The file {filepath} was not found.")
+        return None
+    except Exception as e:
+        print(f"An error occurred loading the file: {e}")
+        return None
+        
+    return questions
+
 
 def main():
     print("Welcome to the Command-Line Quiz Engine!")
@@ -38,6 +57,10 @@ def main():
     selected_filepath = quiz_files[choice - 1]
     print(f"Loading '{selected_filepath}'...")
 
+    questions = load_questions(selected_filepath)
+
+    if questions:
+        print(f"Successfully loaded {len(questions)} questions. Ready to start quiz.")
 
 if __name__ == "__main__":
     main()
